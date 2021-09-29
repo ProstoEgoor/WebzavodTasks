@@ -10,7 +10,7 @@ namespace Task1_1
             long number;
             while(!long.TryParse(Console.ReadLine(), out number) || number < -1_000_000 || number > 1_000_000)
             {
-                Console.WriteLine("Неверный ввод!");
+                Console.Error.WriteLine("Неверный ввод!");
                 Console.Write("Введите число: ");
             }
 
