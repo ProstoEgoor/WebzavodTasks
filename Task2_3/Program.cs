@@ -3,8 +3,21 @@
 namespace Task2_3 {
     class Program {
         static void Main(string[] args) {
-            int minutes = readInt("количество минут до события");
-            Console.WriteLine("До события осталось: " + minutesToString(minutes) + "!");
+            /*int minutes = readInt("количество минут до события");
+            Console.WriteLine("До события осталось: " + minutesToString(minutes) + "!");*/
+
+            DateTime eventDate;
+
+            if (args.Length > 0 && DateTime.TryParse(args[0], out eventDate)) {
+                Console.WriteLine("Дата события передана в аргументах.");
+            } else {
+                if (args.Length > 0) {
+                    Console.WriteLine("Дата в аргументе задана неправильно.");
+                }
+                eventDate = readTime("дату и время события");
+            }
+            TimeSpan interval = eventDate - DateTime.Now;
+            Console.WriteLine("До события осталось: " + minutesToString((int) Math.Round(interval.TotalMinutes, 0)) + "!");
         }
 
         static string minutesToString(int minutes) {
@@ -67,6 +80,16 @@ namespace Task2_3 {
             Console.Write("Введите " + name + ": ");
             int value;
             while (!int.TryParse(Console.ReadLine(), out value) || value < min || value > max) {
+                Console.Error.WriteLine("Неверный ввод!");
+                Console.Write("Введите " + name + ": ");
+            }
+            return value;
+        }
+
+        static DateTime readTime(string name) {
+            Console.Write("Введите " + name + ": ");
+            DateTime value;
+            while (!DateTime.TryParse(Console.ReadLine(), out value)) {
                 Console.Error.WriteLine("Неверный ввод!");
                 Console.Write("Введите " + name + ": ");
             }
