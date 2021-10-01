@@ -5,6 +5,7 @@ namespace Task2_1
 {
     class Program
     {
+        public static decimal PercentOfVAT = 20m;
         static void Main(string[] args)
         {
             Console.Write("Введите стоимость: ");
@@ -29,9 +30,9 @@ namespace Task2_1
 
         static decimal getCostWithoutVAT(decimal cost, out decimal VAT, out decimal VATForTax)
         {
-            VAT = Math.Round(cost / 6m, 2);
+            VAT = Math.Round(cost / (100 + PercentOfVAT) * PercentOfVAT, 2);
             VATForTax = Math.Round(VAT, 0);
-            return Math.Round(cost / 1.2m, 2);
+            return Math.Round(cost / (100 + PercentOfVAT) * 100, 2);
         }
     }
 }
