@@ -14,40 +14,40 @@ namespace Task2_3 {
                 if (args.Length > 0) {
                     Console.WriteLine("Дата в аргументе задана неправильно.");
                 }
-                eventDate = readTime("дату и время события");
+                eventDate = ReadTime("дату и время события");
             }
             TimeSpan interval = eventDate - DateTime.Now;
-            Console.WriteLine("До события осталось: " + minutesToString((int) Math.Round(interval.TotalMinutes, 0)) + "!");
+            Console.WriteLine("До события осталось: " + MinutesToString((int) Math.Round(interval.TotalMinutes, 0)) + "!");
         }
 
-        static string minutesToString(int minutes) {
+        static string MinutesToString(int minutes) {
             if (minutes <= 0) {
                 return "уже началось";
             }
 
-            int[] time = parseMinutes(minutes);
+            int[] time = ParseMinutes(minutes);
 
             string answer = "";
             if (time[0] > 0) {
-                answer += String.Format("{0} {1}", time[0], getNumAddition(time[0], "день", "дня", "дней"));
+                answer += String.Format("{0} {1}", time[0], GetNumAddition(time[0], "день", "дня", "дней"));
                 if (time[1] > 0 || time[2] > 0) {
                     answer += ", ";
                 }
             }
             if (time[1] > 0) {
-                answer += String.Format("{0} {1}", time[1], getNumAddition(time[1], "час", "часа", "часов"));
+                answer += String.Format("{0} {1}", time[1], GetNumAddition(time[1], "час", "часа", "часов"));
                 if (time[2] > 0) {
                     answer += ", ";
                 }
             }
             if (time[2] > 0) {
-                answer += String.Format("{0} {1}", time[2], getNumAddition(time[2], "минута", "минуты", "минут"));
+                answer += String.Format("{0} {1}", time[2], GetNumAddition(time[2], "минута", "минуты", "минут"));
             }
 
             return answer;
         }
 
-        static string getNumAddition(int num, string first, string second, string third) {
+        static string GetNumAddition(int num, string first, string second, string third) {
             int preLastDigit = num % 100 / 10;
 
             if (preLastDigit == 1) {
@@ -67,7 +67,7 @@ namespace Task2_3 {
 
         }
 
-        static int[] parseMinutes(int minutes) {
+        static int[] ParseMinutes(int minutes) {
             int[] answer = new int[3];
 
             answer[0] = minutes / (24 * 60);
@@ -76,7 +76,7 @@ namespace Task2_3 {
 
             return answer;
         }
-        static int readInt(string name, int min = int.MinValue, int max = int.MaxValue) {
+        static int ReadInt(string name, int min = int.MinValue, int max = int.MaxValue) {
             Console.Write("Введите " + name + ": ");
             int value;
             while (!int.TryParse(Console.ReadLine(), out value) || value < min || value > max) {
@@ -86,7 +86,7 @@ namespace Task2_3 {
             return value;
         }
 
-        static DateTime readTime(string name) {
+        static DateTime ReadTime(string name) {
             Console.Write("Введите " + name + ": ");
             DateTime value;
             while (!DateTime.TryParse(Console.ReadLine(), out value)) {

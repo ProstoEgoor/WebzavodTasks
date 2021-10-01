@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace Task1_2
-{
+namespace Task1_2 {
     class Program
     {
         static void Main(string[] args)
@@ -10,10 +9,10 @@ namespace Task1_2
             Console.Write("Введите значение: ");
             string text = Console.ReadLine();
 
-            Console.WriteLine("Тип введенного значения: " + getType(text));
+            Console.WriteLine("Тип введенного значения: " + GetType(text));
         }
 
-        static string getType(string value)
+        static string GetType(string value)
         {
             NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent;
             CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");

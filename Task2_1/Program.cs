@@ -21,14 +21,14 @@ namespace Task2_1
             }
 
             decimal VAT, VATForTax;
-            decimal costWithoutVAT = getCostWithoutVAT(cost, out VAT, out VATForTax);
+            decimal costWithoutVAT = GetCostWithoutVAT(cost, out VAT, out VATForTax);
 
             Console.WriteLine("Стоимость без ндс: \t\t" + costWithoutVAT);
             Console.WriteLine("НДС:\t\t\t\t" + VAT);
             Console.WriteLine("НДС для налоговой декларации:\t" + VATForTax);
         }
 
-        static decimal getCostWithoutVAT(decimal cost, out decimal VAT, out decimal VATForTax)
+        static decimal GetCostWithoutVAT(decimal cost, out decimal VAT, out decimal VATForTax)
         {
             VAT = Math.Round(cost / (100 + PercentOfVAT) * PercentOfVAT, 2);
             VATForTax = Math.Round(VAT, 0);

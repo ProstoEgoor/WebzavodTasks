@@ -14,10 +14,10 @@ namespace Task1_1
                 Console.Write("Введите число: ");
             }
 
-            Console.WriteLine(number + " в квадрате равно: " + getSquare(number));
+            Console.WriteLine(number + " в квадрате равно: " + GetSquare(number));
         }
 
-        static long getSquare(long number)
+        static long GetSquare(long number)
         {
             return number * number;
         }

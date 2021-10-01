@@ -15,7 +15,7 @@ namespace Task1_3
 
             Console.WriteLine("Введите числа:");
 
-            while(tryReadInt(out number))
+            while(TryReadInt(out number))
             {
                 ++length;
                 if (number < min)
@@ -34,7 +34,7 @@ namespace Task1_3
             Console.WriteLine("Среднее чисел:\t\t" + mean);
         }
 
-        static bool tryReadInt(out int number)
+        static bool TryReadInt(out int number)
         {
             string line;
             while(true)
