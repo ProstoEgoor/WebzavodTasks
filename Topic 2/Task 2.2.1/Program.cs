@@ -15,7 +15,8 @@ namespace Task2_1 {
                  754, 817, 531, 628,
                  911, 668, 865, 1526 };
 
-        static int[] AmountFromSuppliers = new int[NumOfSuppliers] { 600, 420, 360, 250, 700, 390 };
+        /*static int[] AmountFromSuppliers = new int[NumOfSuppliers] { 600, 420, 360, 250, 700, 390 };*/
+        static int[] AmountFromSuppliers = new int[NumOfSuppliers] { 5000, 5000, 5000, 5000, 5000, 5000 };
 
         static double[] SuppliersPrice = new double[NumOfSuppliers] { 5.2, 4.5, 6.1, 3.8, 6.4, 5.6 };
 
