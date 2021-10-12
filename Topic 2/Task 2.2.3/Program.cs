@@ -3,12 +3,10 @@ using System.Text;
 
 namespace Task_2._2._3 {
     class Program {
-        enum Stage {
-            Find,
-            ReplaceInputF,
-            ReplaceInputR,
-            Replace,
-            ReplaceOut
+        enum ReplaceStage {
+            InputF,
+            InputR,
+            Output
         }
 
         static void Main(string[] args) {
@@ -22,22 +20,28 @@ namespace Task_2._2._3 {
             StringBuilder findStr = new StringBuilder();
             StringBuilder replaceStr = new StringBuilder();
             bool ignoreCase = true;
+            bool replace = false;
+            bool needUpdateBg = true;
 
-            Stage stage = Stage.Find;
+            ReplaceStage stage = ReplaceStage.InputF;
 
             int windowTopPrev = 0;
+
+            int count = 0;
 
             while (true) {
 
                 Console.Clear();
-                ShowMenu(stage, ignoreCase);
-                (int left, int top) cursorPos = ShowRequest(findStr.ToString(), replaceStr.ToString(), stage, ignoreCase);
-                FindColor(ref text, ref bgColor, findStr.ToString(), ignoreCase, stage);
+                ShowMenu(ignoreCase, replace);
+                (int left, int top) cursorPos = ShowRequest(findStr.ToString(), replaceStr.ToString(), replace, stage);
 
-                if (stage == Stage.Replace) {
-                    Replace(ref text, ref bgColor, findStr.ToString(), replaceStr.ToString(), ignoreCase);
-                    stage = Stage.ReplaceOut;
-                    continue;
+                if (needUpdateBg) {
+                    if (stage != ReplaceStage.Output) {
+                        count = Find(ref text, ref bgColor, findStr.ToString(), ignoreCase);
+                    } else {
+                        Replace(ref text, ref bgColor, findStr.ToString(), replaceStr.ToString(), count);
+                    }
+                    needUpdateBg = false;
                 }
 
                 ShowText(ref text, bgColor);
@@ -50,52 +54,81 @@ namespace Task_2._2._3 {
 
                 var key = Console.ReadKey(true);
 
-                if (key.Key == ConsoleKey.Q) {
-                    return;
-                } else if (key.Key == ConsoleKey.Backspace) {
-                    if (findStr.Length > 0 && (stage == Stage.Find || stage == Stage.ReplaceInputF)) {
+                if (key.Key == ConsoleKey.Backspace) {
+
+                    if (findStr.Length > 0 && (!replace || stage == ReplaceStage.InputF)) {
                         findStr.Remove(findStr.Length - 1, 1);
-                    } else if (stage == Stage.ReplaceInputR) {
+                        needUpdateBg = true;
+                    } else if (stage == ReplaceStage.InputR) {
                         if (replaceStr.Length > 0) {
                             replaceStr.Remove(replaceStr.Length - 1, 1);
                         } else {
-                            stage = Stage.ReplaceInputF;
+                            stage = ReplaceStage.InputF;
                         }
                     }
 
                 } else if (key.Key == ConsoleKey.Enter) {
-                    if (findStr.Length > 0 && stage == Stage.ReplaceInputF) {
-                        stage = Stage.ReplaceInputR;
-                    } else if (stage == Stage.ReplaceInputR) {
-                        stage = Stage.Replace;
+                    if (!replace) {
+                        continue;
                     }
 
-                } else if (key.KeyChar != 0) {
-                    if (stage == Stage.Find || stage == Stage.ReplaceInputF) {
-                        findStr.Append(key.KeyChar);
-                    } else if (stage == Stage.ReplaceInputR) {
-                        replaceStr.Append(key.KeyChar);
+                    if (stage == ReplaceStage.InputF && findStr.Length > 0) {
+                        stage = ReplaceStage.InputR;
+                    } else if (stage == ReplaceStage.InputR) {
+                        stage = ReplaceStage.Output;
+                        needUpdateBg = true;
+                    } else if (stage == ReplaceStage.Output) {
+                        stage = ReplaceStage.InputF;
+                        findStr.Clear();
+                        replaceStr.Clear();
+                        needUpdateBg = true;
                     }
 
                 } else if (key.Key == ConsoleKey.F2) {
-                    ignoreCase = !ignoreCase;
                     windowTopPrev = Console.WindowTop;
 
-                } else if (key.Key == ConsoleKey.F3) {
-                    if (stage != Stage.Find) {
-                        stage = Stage.Find;
-                    } else {
-                        stage = Stage.ReplaceInputF;
+                    if (stage != ReplaceStage.Output) {
+                        ignoreCase = !ignoreCase;
+                        needUpdateBg = true;
                     }
+
+                } else if (key.Key == ConsoleKey.F3) {
+
+                    replaceStr.Clear();
+                    stage = ReplaceStage.InputF;
+                    replace = !replace;
+                    needUpdateBg = true;
+
+                } else if (key.Key == ConsoleKey.Escape) {
+                    return;
+                } else if (key.KeyChar != 0) {
+
+                    if (!replace || stage == ReplaceStage.InputF) {
+                        findStr.Append(key.KeyChar);
+                        needUpdateBg = true;
+                    } else if (stage == ReplaceStage.InputR) {
+                        replaceStr.Append(key.KeyChar);
+                    }
+
                 }
 
+                if (findStr.Length > Console.WindowWidth) {
+                    findStr.Remove(Console.WindowWidth, findStr.Length - Console.WindowWidth);
+                }
+
+                if (replaceStr.Length > Console.WindowWidth) {
+                    replaceStr.Remove(Console.WindowWidth, replaceStr.Length - Console.WindowWidth);
+                }
             }
         }
 
-        private static void Replace(ref string text, ref byte[] bgColor, string findStr, string replaceStr, bool ignoreCase) {
+        private static void Replace(ref string text, ref byte[] bgColor, string findStr, string replaceStr, int count) {
             StringBuilder sb = new StringBuilder(text);
 
+            int oneOffset = replaceStr.Length - findStr.Length;
             int offset = 0;
+
+            byte[] newBgColor = new byte[bgColor.Length + oneOffset * count];
 
             /*sb.Replace(v1, v2);*/
 
@@ -104,33 +137,20 @@ namespace Task_2._2._3 {
                     sb.Remove(i + offset, findStr.Length);
                     sb.Insert(i + offset, replaceStr);
 
+                    for (int j = 0; j < replaceStr.Length; j++) {
+                        newBgColor[i + offset + j] = (byte)ConsoleColor.Yellow;
+                    }
+
                     i += findStr.Length;
                     offset += replaceStr.Length - findStr.Length;
                 }
             }
+
+            bgColor = newBgColor;
             text = sb.ToString();
         }
 
-        static (int, int) ShowRequest(string findStr, string replaceStr, Stage stage, bool ignoreCase) {
-            Console.WriteLine($"Искать: {findStr}");
-            (int left, int top) cursorPos = (findStr.Length + 8, 1);
-
-            if (stage != Stage.Find) {
-                Console.WriteLine($"Заменить на: {replaceStr}");
-            }
-
-            if (stage == Stage.ReplaceInputR || stage == Stage.Replace) {
-                cursorPos = (replaceStr.Length + 13, 2);
-            }
-
-            Console.WriteLine();
-            Console.WriteLine();
-
-            return cursorPos;
-
-        }
-
-        static void FindColor(ref string text, ref byte[] bgColor, string findStr, bool ignoreCase, Stage stage) {
+        static int Find(ref string text, ref byte[] bgColor, string findStr, bool ignoreCase) {
             if (bgColor == null || bgColor.Length != text.Length) {
                 bgColor = new byte[text.Length];
             } else {
@@ -139,11 +159,11 @@ namespace Task_2._2._3 {
                 }
             }
 
-
-
             if (findStr == "") {
-                return;
+                return 0;
             }
+
+            int count = 0;
 
             int pos = 0;
             while (pos != -1) {
@@ -155,23 +175,26 @@ namespace Task_2._2._3 {
 
                 if (pos != -1) {
                     for (int i = 0; i < findStr.Length; i++) {
-                        bgColor[pos + i] = (stage == Stage.ReplaceOut) ? (byte)ConsoleColor.Yellow : (byte)ConsoleColor.Green;
+                        bgColor[pos + i] = (byte)ConsoleColor.Green;
                     }
 
                     pos += findStr.Length;
+                    ++count;
                 }
             }
+
+            return count;
         }
 
-        static void ShowMenu(Stage stage, bool ignoreCase) {
+        static void ShowMenu(bool ignoreCase, bool replace) {
             Console.BackgroundColor = ConsoleColor.DarkCyan;
             for (int i = 0; i < Console.WindowWidth; i++)
                 Console.Write(" ");
             Console.CursorLeft = 0;
             Console.CursorTop = 0;
-            PrintMenuCommand("Q", "Выход");
             PrintMenuCommand("F2", "Учитывать регистр", !ignoreCase);
-            PrintMenuCommand("F3", "Заменить", stage != Stage.Find);
+            PrintMenuCommand("F3", "Заменить", replace);
+            PrintMenuCommand("Esc", "Выход");
             Console.WriteLine();
             Console.ResetColor();
         }
@@ -188,6 +211,25 @@ namespace Task_2._2._3 {
 
             Console.BackgroundColor = bg;
             Console.Write(" ");
+        }
+
+        static (int, int) ShowRequest(string findStr, string replaceStr, bool replace, ReplaceStage stage) {
+            Console.WriteLine("Искать:");
+            Console.WriteLine(findStr);
+            (int left, int top) cursorPos = (findStr.Length, 2);
+
+            if (replace) {
+                Console.WriteLine("Заменить на:");
+                Console.WriteLine(replaceStr);
+
+                if (stage == ReplaceStage.InputR || stage == ReplaceStage.Output) {
+                    cursorPos = (replaceStr.Length, 4);
+                }
+            }
+
+            Console.WriteLine();
+
+            return cursorPos;
         }
 
         static void ShowText(ref string text, byte[] bgColor) {
