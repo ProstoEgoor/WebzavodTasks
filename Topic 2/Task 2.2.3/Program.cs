@@ -236,12 +236,12 @@ namespace Task_2._2._3 {
             int startPos = 0;
             int nextStartPos = 0;
             while (startPos < text.Length) {
-                ShowLine(ref text, startPos, GetEndLine(ref text, ref nextStartPos), ref bgColor);
+                ShowLine(ref text, startPos, GetEndLine(ref text, ref nextStartPos), bgColor);
                 startPos = nextStartPos;
             }
         }
 
-        static void ShowLine(ref string text, int start, int end, ref byte[] bgColor) {
+        static void ShowLine(ref string text, int start, int end, byte[] bgColor) {
             for (int i = start; i < end; i++) {
                 if (bgColor[i] != 0) {
                     Console.BackgroundColor = (ConsoleColor)bgColor[i];
