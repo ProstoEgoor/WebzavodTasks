@@ -8,6 +8,6 @@ namespace Task_5._2._2 {
         public ulong HardDiskSize { get; set; }
         public ulong RAMSize { get; set; }
 
-        public Computer() : base() { }
+        public Computer() { }
     }
 }
