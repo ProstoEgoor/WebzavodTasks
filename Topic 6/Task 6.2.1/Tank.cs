@@ -11,11 +11,11 @@ namespace Task_6._2._1 {
             get => currentVolume;
             set {
                 if (value > MaxVolume) {
-                    throw new TankOverflowException();
+                    throw new TankOverflowException(value - CurrentVolume, value - MaxVolume);
                 }
 
                 if (value < 0) {
-                    throw new NotEnoughException();
+                    throw new NotEnoughException(CurrentVolume - value, -value);
                 }
 
                 currentVolume = value;
@@ -49,9 +49,19 @@ namespace Task_6._2._1 {
     }
 
     class TankOverflowException : Exception {
-        public TankOverflowException() : base("В цистерне не хватает места.") { }
+        public int AddedVolume { get; }
+        public int ExcessVolume { get; }
+        public TankOverflowException(int addedVolume, int excessVolume) : base($"В цистерне не хватает места. {excessVolume} л. не помещаются.") {
+            AddedVolume = addedVolume;
+            ExcessVolume = excessVolume;
+        }
     }
     class NotEnoughException : Exception {
-        public NotEnoughException() : base("В цистерне недостаточно жидкости.") { }
+        public int TakedVolume { get; }
+        public int LackOfVolume { get; }
+        public NotEnoughException(int takedVolume, int lackOfVolume) : base($"В цистерне недостаточно жидкости. {lackOfVolume} л. не хватает.") {
+            TakedVolume = takedVolume;
+            LackOfVolume = lackOfVolume;
+        }
     }
 }

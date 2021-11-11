@@ -23,9 +23,7 @@ namespace Task_6._2._1 {
                     } else {
                         Console.WriteLine("Неверный ввод. Повторите ввод.");
                     }
-                } catch (TankOverflowException e) {
-                    Console.WriteLine(e.Message);
-                } catch (NotEnoughException e) {
+                } catch (Exception e) {
                     Console.WriteLine(e.Message);
                 }
             }
