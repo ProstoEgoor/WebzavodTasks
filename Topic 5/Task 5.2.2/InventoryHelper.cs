@@ -17,7 +17,7 @@ namespace Task_5._2._2 {
                 throw new Exception("Общее количество объектов превышает допустимые границы шаблона.");
             }
 
-            return $"{type:D2}-{countOfCurrentObjects:D4}-{dateRegistration.ToString("yy")}-{++CountOfObjects:D6}";
+            return $"{type:D2}-{countOfCurrentObjects:D4}-{dateRegistration:yy}-{++CountOfObjects:D6}";
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Task_6._2._1 {
     class Tank {
-        public uint MaxVolume { get; }
+        public int MaxVolume { get; }
 
         int currentVolume;
         public int CurrentVolume {
@@ -22,19 +22,25 @@ namespace Task_6._2._1 {
             }
         }
 
-        public Tank(uint maxVolume) {
-            if (maxVolume == 0) {
+        public Tank(int maxVolume) {
+            if (maxVolume <= 0) {
                 throw new ArgumentOutOfRangeException("Объем цистерны должен быть больше нуля.");
             }
             MaxVolume = maxVolume;
         }
 
-        public void Add(uint liquidVolume) {
-            CurrentVolume += (int)liquidVolume;
+        public void Add(int liquidVolume) {
+            if (liquidVolume <= 0) {
+                throw new ArgumentOutOfRangeException("Объем должен быть больше нуля.");
+            }
+            CurrentVolume += liquidVolume;
         }
 
-        public void Take(uint liquidVolume) {
-            CurrentVolume -= (int)liquidVolume;
+        public void Take(int liquidVolume) {
+            if (liquidVolume <= 0) {
+                throw new ArgumentOutOfRangeException("Объем должен быть больше нуля.");
+            }
+            CurrentVolume -= liquidVolume;
         }
 
         public override string ToString() {
