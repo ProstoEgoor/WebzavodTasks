@@ -32,8 +32,13 @@ namespace Task_7._2._1 {
             while (true) {
 
                 Console.Clear();
+
+                if (currentStage == InputStage.Escape) {
+                    return;
+                }
+
                 ShowMenu(ignoreCase, replace);
-                (int left, int top) cursorPos = ShowRequest(findStr.ToString(), replaceStr.ToString(), replace, currentStage);
+                (int top, int left) = ShowRequest(findStr.ToString(), replaceStr.ToString(), replace, currentStage);
 
                 if (needUpdateHighlight || currentStage == InputStage.InputF) {
                     if (currentStage == InputStage.InputF) {
@@ -48,8 +53,8 @@ namespace Task_7._2._1 {
                     (currentStage == InputStage.OutputR) ? replaceStr.Length : findStr.Length,
                     (currentStage == InputStage.OutputR) ? ConsoleColor.Yellow : ConsoleColor.Green);
 
-                Console.CursorTop = cursorPos.top;
-                Console.CursorLeft = cursorPos.left;
+                Console.CursorTop = top;
+                Console.CursorLeft = left;
 
                 Console.WindowTop = 0;
 
@@ -119,17 +124,13 @@ namespace Task_7._2._1 {
 
         static (int, int) ShowRequest(string findStr, string replaceStr, bool replace, InputStage stage) {
             Console.WriteLine("Искать:");
-            Console.WriteLine(findStr);
-            (int left, int top) cursorPos = (findStr.Length, 2);
+            Console.Write(findStr);
 
             if (replace) {
                 Console.WriteLine("Заменить на:");
-                Console.WriteLine(replaceStr);
-
-                if (stage == InputStage.InputR || stage == InputStage.OutputR) {
-                    cursorPos = (replaceStr.Length, 4);
-                }
+                Console.Write(replaceStr);
             }
+            (int top, int left) cursorPos = (Console.CursorTop, Console.CursorLeft);
 
             Console.WriteLine();
 
