@@ -65,7 +65,7 @@ namespace Task_7._2._1 {
                     if (currentStage == InputStage.InputF) {
                         replaceStr.Clear();
                     } else if (currentStage == InputStage.OutputR) {
-                        needUpdateHighlight = true; 
+                        needUpdateHighlight = true;
                     }
                 }
             }
@@ -101,14 +101,14 @@ namespace Task_7._2._1 {
                 Console.Write(" ");
             Console.CursorLeft = 0;
             Console.CursorTop = 0;
-            PrintMenuCommand("F2", "Учитывать регистр", !ignoreCase);
-            PrintMenuCommand("F3", "Заменить", replace);
-            PrintMenuCommand("Esc", "Выход");
+            ShowMenuCommand("F2", "Учитывать регистр", !ignoreCase);
+            ShowMenuCommand("F3", "Заменить", replace);
+            ShowMenuCommand("Esc", "Выход");
             Console.WriteLine();
             Console.ResetColor();
         }
 
-        static void PrintMenuCommand(string key, string action, bool active = false) {
+        static void ShowMenuCommand(string key, string action, bool active = false) {
             var bg = Console.BackgroundColor;
             if (active) {
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
@@ -122,18 +122,22 @@ namespace Task_7._2._1 {
             Console.Write(" ");
         }
 
-        static (int, int) ShowRequest(string findStr, string replaceStr, bool replace, InputStage stage) {
+        static (int, int) ShowRequest(string findStr, string replaceStr, bool replace, InputStage currentStage) {
             Console.WriteLine("Искать:");
             Console.Write(findStr);
+            (int top, int left) cursorPos = (Console.CursorTop, Console.CursorLeft);
+            Console.WriteLine();
 
             if (replace) {
                 Console.WriteLine("Заменить на:");
                 Console.Write(replaceStr);
+                if (currentStage == InputStage.InputR || currentStage == InputStage.OutputR) {
+                    cursorPos = (Console.CursorTop, Console.CursorLeft);
+                }
+                Console.WriteLine();
             }
-            (int top, int left) cursorPos = (Console.CursorTop, Console.CursorLeft);
 
             Console.WriteLine();
-
             return cursorPos;
         }
 
@@ -157,7 +161,6 @@ namespace Task_7._2._1 {
             Console.ForegroundColor = ConsoleColor.Black;
 
             while (highlightPos < highlightPositions.Length && highlightPositions[highlightPos] >= start - lengthOfHighlight && highlightPositions[highlightPos] < end) {
-
                 int highlightStart = Math.Max(start, highlightPositions[highlightPos]);
                 int highlightEnd = Math.Min(end, highlightPositions[highlightPos] + lengthOfHighlight);
                 Console.CursorLeft = highlightStart - start;
@@ -224,7 +227,6 @@ namespace Task_7._2._1 {
             if (width <= 1) {
                 throw new ArgumentException("Width must be larger than 1.");
             }
-
 
             if (start >= text.Length) {
                 end = start;
