@@ -3,14 +3,20 @@ using System.Text;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
+using System.IO;
 
 namespace Task_7._2._1 {
     class Program {
         enum InputStage {
             Escape,
-            InputF,
-            InputR,
-            OutputR
+            InputFind,
+            InputReplace,
+            OutputReplace,
+            InputLoad,
+            EndLoad,
+            InputSave,
+            EndSaveConfirmation,
+            EndSave,
         }
 
         static void Main(string[] args) {
@@ -18,16 +24,18 @@ namespace Task_7._2._1 {
         }
 
         static void Manage() {
-            string text = "Что такое Lorem Ipsum?\r\nLorem Ipsum - это текст-\"рыба\", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной \"рыбой\" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.\r\n\r\nПочему он используется?\r\nДавно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации \"Здесь ваш текст..Здесь ваш текст..Здесь ваш текст..\" Многие программы электронной вёрстки и редакторы HTML используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым словам \"lorem ipsum\" сразу показывает, как много веб-страниц всё ещё дожидаются своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много версий. Некоторые версии появились по ошибке, некоторые - намеренно (например, юмористические варианты).\r\n\r\nОткуда он появился?\r\nМногие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем так. Его корни уходят в один фрагмент классической латыни 45 года н.э., то есть более двух тысячелетий назад. Ричард МакКлинток, профессор латыни из колледжа Hampden-Sydney, штат Вирджиния, взял одно из самых странных слов в Lorem Ipsum, \"consectetur\", и занялся его поисками в классической латинской литературе. В результате он нашёл неоспоримый первоисточник Lorem Ipsum в разделах 1.10.32 и 1.10.33 книги \"de Finibus Bonorum et Malorum\" (\"О пределах добра и зла\"), написанной Цицероном в 45 году н.э. Этот трактат по теории этики был очень популярен в эпоху Возрождения. Первая строка Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", происходит от одной из строк в разделе 1.10.32\r\n\r\nГде его взять?\r\nЕсть много вариантов Lorem Ipsum, но большинство из них имеет не всегда приемлемые модификации, например, юмористические вставки или слова, которые даже отдалённо не напоминают латынь. Если вам нужен Lorem Ipsum для серьёзного проекта, вы наверняка не хотите какой-нибудь шутки, скрытой в середине абзаца. Также все другие известные генераторы Lorem Ipsum используют один и тот же текст, который они просто повторяют, пока не достигнут нужный объём. Это делает предлагаемый здесь генератор единственным настоящим Lorem Ipsum генератором. Он использует словарь из более чем 200 латинских слов, а также набор моделей предложений. В результате сгенерированный Lorem Ipsum выглядит правдоподобно, не имеет повторяющихся абзацей или \"невозможных\" слов.";
+            string text = "";
             int[] highlightPositions = null;
 
             StringBuilder findStr = new StringBuilder();
             StringBuilder replaceStr = new StringBuilder();
+            StringBuilder fileStr = new StringBuilder();
             bool ignoreCase = true;
             bool replace = false;
             bool needUpdateHighlight = true;
+            bool wasLoadText = false;
 
-            InputStage currentStage = InputStage.InputF;
+            InputStage currentStage = InputStage.InputFind;
 
             while (true) {
 
@@ -37,21 +45,59 @@ namespace Task_7._2._1 {
                     return;
                 }
 
-                ShowMenu(ignoreCase, replace);
-                (int top, int left) = ShowRequest(findStr.ToString(), replaceStr.ToString(), replace, currentStage);
+                ShowMenu(currentStage, ignoreCase, replace);
+                (int top, int left) = ShowRequest(findStr.ToString(), replaceStr.ToString(), fileStr.ToString(), replace, currentStage);
+                Console.CursorVisible = true;
 
-                if (needUpdateHighlight || currentStage == InputStage.InputF) {
-                    if (currentStage == InputStage.InputF) {
+                if (currentStage == InputStage.EndLoad) {
+                    try {
+                        text = File.ReadAllText(fileStr.ToString());
+                        Console.WriteLine("Файл успешно прочитан.");
+                        wasLoadText = true;
+                    } catch (DirectoryNotFoundException e) {
+                        Console.WriteLine($"Папка не найдена.");
+                    } catch (FileNotFoundException e) {
+                        Console.WriteLine($"Файл не найден.");
+                    } catch (System.Security.SecurityException e) {
+                        Console.WriteLine($"Недостаточно прав для доступа к файлу.");
+                    } catch (Exception e) {
+                        Console.WriteLine($"Ошибка доступа к файлу.");
+                    }
+
+                    Console.CursorVisible = false;
+                } else if (currentStage == InputStage.EndSave) {
+                    try {
+                        File.WriteAllText(fileStr.ToString(), text);
+                        Console.WriteLine("Текст успешно записан в файл.");
+                    } catch (DirectoryNotFoundException e) {
+                        Console.WriteLine($"Папка не найдена.");
+                    } catch (System.Security.SecurityException e) {
+                        Console.WriteLine($"Недостаточно прав для записи в файл.");
+                    } catch (Exception e) {
+                        Console.WriteLine($"Ошибка записи в файл.");
+                    }
+
+                    Console.CursorVisible = false;
+                }
+
+                Console.WriteLine();
+
+                if (needUpdateHighlight || currentStage == InputStage.InputFind) {
+                    if (currentStage == InputStage.InputFind) {
                         highlightPositions = Find(text, findStr.ToString(), ignoreCase);
-                    } else if (currentStage == InputStage.OutputR) {
+                    } else if (currentStage == InputStage.OutputReplace) {
                         text = Replace(text, highlightPositions, findStr.ToString(), replaceStr.ToString(), ignoreCase);
                     }
                     needUpdateHighlight = false;
                 }
 
-                ShowText(text, highlightPositions,
-                    (currentStage == InputStage.OutputR) ? replaceStr.Length : findStr.Length,
-                    (currentStage == InputStage.OutputR) ? ConsoleColor.Yellow : ConsoleColor.Green);
+                if (wasLoadText) {
+                    ShowText(text, highlightPositions,
+                        (currentStage == InputStage.OutputReplace) ? replaceStr.Length : findStr.Length,
+                        (currentStage == InputStage.OutputReplace) ? ConsoleColor.Yellow : ConsoleColor.Green);
+                } else {
+                    Console.WriteLine("Текст не загружен.");
+                }
 
                 Console.CursorTop = top;
                 Console.CursorLeft = left;
@@ -59,19 +105,41 @@ namespace Task_7._2._1 {
                 Console.WindowTop = 0;
 
                 var keyInfo = Console.ReadKey(true);
-                var currentWriteField = (currentStage == InputStage.InputF) ? findStr : replaceStr;
+                var currentWriteField = fileStr;
+                if (currentStage == InputStage.InputFind) {
+                    currentWriteField = findStr;
+                } else if (currentStage == InputStage.InputReplace || currentStage == InputStage.OutputReplace) {
+                    currentWriteField = replaceStr;
+                }
 
                 if (HandleKeystroke(keyInfo, ref currentStage, ref replace, ref ignoreCase, currentWriteField)) {
-                    if (currentStage == InputStage.InputF) {
+                    if (currentStage == InputStage.InputFind) {
                         replaceStr.Clear();
-                    } else if (currentStage == InputStage.OutputR) {
+                    } else if (currentStage == InputStage.OutputReplace) {
                         needUpdateHighlight = true;
+                    } else if (currentStage == InputStage.InputLoad) {
+                        findStr.Clear();
+                        needUpdateHighlight = true;
+                        if (fileStr.Length == 0) {
+                            fileStr.Append(Directory.GetCurrentDirectory());
+                        }
+                    } else if (currentStage == InputStage.InputSave) {
+                        if (wasLoadText) {
+                            findStr.Clear();
+                            needUpdateHighlight = true;
+                        } else {
+                            currentStage = InputStage.InputFind;
+                        }
+                    } else if (currentStage == InputStage.EndSaveConfirmation) {
+                        if (!File.Exists(fileStr.ToString())) {
+                            currentStage = InputStage.EndSave;
+                        }
                     }
                 }
             }
         }
 
-        private static string Replace(string text, int[] highlightPositions, string findStr, string replaceStr, bool ignoreCase) {
+        static string Replace(string text, int[] highlightPositions, string findStr, string replaceStr, bool ignoreCase) {
             Regex regex = new Regex(Regex.Escape(findStr), (RegexOptions)((int)RegexOptions.IgnoreCase * Convert.ToInt32(ignoreCase)));
 
             int offset = replaceStr.Length - findStr.Length;
@@ -95,7 +163,7 @@ namespace Task_7._2._1 {
             return matches.Select(match => match.Index).ToArray();
         }
 
-        static void ShowMenu(bool ignoreCase, bool replace) {
+        static void ShowMenu(InputStage currentStage, bool ignoreCase, bool replace) {
             Console.BackgroundColor = ConsoleColor.DarkCyan;
             for (int i = 0; i < Console.WindowWidth; i++)
                 Console.Write(" ");
@@ -103,6 +171,8 @@ namespace Task_7._2._1 {
             Console.CursorTop = 0;
             ShowMenuCommand("F2", "Учитывать регистр", !ignoreCase);
             ShowMenuCommand("F3", "Заменить", replace);
+            ShowMenuCommand("F4", "Загрузить из файла", currentStage == InputStage.InputLoad || currentStage == InputStage.EndLoad);
+            ShowMenuCommand("F5", "Сохранить в файл", currentStage == InputStage.InputSave || currentStage == InputStage.EndSaveConfirmation || currentStage == InputStage.EndSave);
             ShowMenuCommand("Esc", "Выход");
             Console.WriteLine();
             Console.ResetColor();
@@ -122,22 +192,40 @@ namespace Task_7._2._1 {
             Console.Write(" ");
         }
 
-        static (int, int) ShowRequest(string findStr, string replaceStr, bool replace, InputStage currentStage) {
-            Console.WriteLine("Искать:");
-            Console.Write(findStr);
+        static (int, int) ShowRequest(string findStr, string replaceStr, string fileStr, bool replace, InputStage currentStage) {
             (int top, int left) cursorPos = (Console.CursorTop, Console.CursorLeft);
-            Console.WriteLine();
 
-            if (replace) {
-                Console.WriteLine("Заменить на:");
-                Console.Write(replaceStr);
-                if (currentStage == InputStage.InputR || currentStage == InputStage.OutputR) {
-                    cursorPos = (Console.CursorTop, Console.CursorLeft);
-                }
+            if (currentStage == InputStage.InputLoad) {
+                Console.WriteLine("Загрузить текст из файла:");
+                Console.Write(fileStr);
+                cursorPos = (Console.CursorTop, Console.CursorLeft);
                 Console.WriteLine();
+            } else if (currentStage == InputStage.InputSave || currentStage == InputStage.EndSaveConfirmation) {
+                Console.WriteLine("Сохранить текст в файл:");
+                Console.Write(fileStr);
+                cursorPos = (Console.CursorTop, Console.CursorLeft);
+                Console.WriteLine();
+                if (currentStage == InputStage.EndSaveConfirmation) {
+                    Console.Write("Файл существует. Перезаписать? д/н");
+                    cursorPos = (Console.CursorTop, Console.CursorLeft);
+                    Console.WriteLine();
+                }
+            } else if (currentStage == InputStage.InputFind || currentStage == InputStage.InputReplace || currentStage == InputStage.OutputReplace) {
+                Console.WriteLine("Искать:");
+                Console.Write(findStr);
+                cursorPos = (Console.CursorTop, Console.CursorLeft);
+                Console.WriteLine();
+
+                if (replace) {
+                    Console.WriteLine("Заменить на:");
+                    Console.Write(replaceStr);
+                    if (currentStage == InputStage.InputReplace || currentStage == InputStage.OutputReplace) {
+                        cursorPos = (Console.CursorTop, Console.CursorLeft);
+                    }
+                    Console.WriteLine();
+                }
             }
 
-            Console.WriteLine();
             return cursorPos;
         }
 
@@ -175,48 +263,97 @@ namespace Task_7._2._1 {
 
         static bool HandleKeystroke(ConsoleKeyInfo keyInfo, ref InputStage currentStage, ref bool replace, ref bool ignoreCase, StringBuilder writeField) {
             bool stageWasChanged = false;
+            if (currentStage == InputStage.EndLoad || currentStage == InputStage.EndSave) {
+                currentStage = InputStage.InputFind;
+                return true;
+            }
+
+            if (currentStage == InputStage.EndSaveConfirmation) {
+                if (keyInfo.KeyChar == 'д') {
+                    currentStage = InputStage.EndSave;
+                    Console.Write('д');
+                } else {
+                    currentStage = InputStage.InputSave;
+                    Console.Write('н');
+                }
+
+                return true;
+            }
+
             if (keyInfo.Key == ConsoleKey.F2) {
-
                 ignoreCase = !ignoreCase;
+                return true;
+            }
 
-            } else if (keyInfo.Key == ConsoleKey.F3) {
-
-                if (currentStage != InputStage.InputF) {
-                    currentStage = InputStage.InputF;
+            if (keyInfo.Key == ConsoleKey.F3) {
+                if (currentStage != InputStage.InputFind) {
+                    currentStage = InputStage.InputFind;
                     stageWasChanged = true;
                 }
                 replace = !replace;
+                return stageWasChanged;
+            }
 
-            } else if (keyInfo.Key == ConsoleKey.Escape) {
+            if (keyInfo.Key == ConsoleKey.F4) {
+                if (currentStage == InputStage.InputLoad || currentStage == InputStage.EndLoad) {
+                    currentStage = InputStage.InputFind;
+                } else {
+                    currentStage = InputStage.InputLoad;
 
+                }
+                return true;
+            }
+
+            if (keyInfo.Key == ConsoleKey.F5) {
+                if (currentStage == InputStage.InputSave || currentStage == InputStage.EndSave) {
+                    currentStage = InputStage.InputFind;
+                } else {
+                    currentStage = InputStage.InputSave;
+                }
+                return true;
+            }
+
+            if (keyInfo.Key == ConsoleKey.Escape) {
                 currentStage = InputStage.Escape;
-                stageWasChanged = true;
+                return true;
+            }
 
-            } else if (keyInfo.Key == ConsoleKey.Backspace) {
-
-                if ((currentStage == InputStage.InputF || currentStage == InputStage.InputR) && writeField.Length > 0) {
+            if (keyInfo.Key == ConsoleKey.Backspace) {
+                if ((currentStage == InputStage.InputFind || currentStage == InputStage.InputReplace || currentStage == InputStage.InputLoad || currentStage == InputStage.InputSave) && writeField.Length > 0) {
                     writeField.Remove(writeField.Length - 1, 1);
                 }
+                return false;
 
-            } else if (keyInfo.Key == ConsoleKey.Enter) {
+            }
 
+            if (keyInfo.Key == ConsoleKey.Enter) {
                 if (replace) {
-                    if (currentStage == InputStage.InputF && writeField.Length > 0) {
-                        currentStage = InputStage.InputR;
+                    if (currentStage == InputStage.InputFind && writeField.Length > 0) {
+                        currentStage = InputStage.InputReplace;
                         stageWasChanged = true;
-                    } else if (currentStage == InputStage.InputR) {
-                        currentStage = InputStage.OutputR;
+                    } else if (currentStage == InputStage.InputReplace) {
+                        currentStage = InputStage.OutputReplace;
                         stageWasChanged = true;
-                    } else if (currentStage == InputStage.OutputR) {
-                        currentStage = InputStage.InputF;
+                    } else if (currentStage == InputStage.OutputReplace) {
+                        currentStage = InputStage.InputFind;
                         stageWasChanged = true;
                     }
                 }
 
-            } else if (char.IsLetterOrDigit(keyInfo.KeyChar) || char.IsWhiteSpace(keyInfo.KeyChar) || char.IsPunctuation(keyInfo.KeyChar)) {
+                if (currentStage == InputStage.InputLoad && writeField.Length > 0) {
+                    currentStage = InputStage.EndLoad;
+                    stageWasChanged = true;
+                } else if (currentStage == InputStage.InputSave && writeField.Length > 0) {
+                    currentStage = InputStage.EndSaveConfirmation;
+                    stageWasChanged = true;
+                }
 
+                return stageWasChanged;
+            }
+
+            if (char.IsLetterOrDigit(keyInfo.KeyChar) || char.IsWhiteSpace(keyInfo.KeyChar) || char.IsPunctuation(keyInfo.KeyChar)) {
                 writeField.Append(keyInfo.KeyChar);
-
+                return false;
             }
 
             return stageWasChanged;
