@@ -54,13 +54,13 @@ namespace Task_7._2._1 {
                         text = File.ReadAllText(fileStr.ToString());
                         Console.WriteLine("Файл успешно прочитан.");
                         wasLoadText = true;
-                    } catch (DirectoryNotFoundException e) {
+                    } catch (DirectoryNotFoundException) {
                         Console.WriteLine($"Папка не найдена.");
-                    } catch (FileNotFoundException e) {
+                    } catch (FileNotFoundException) {
                         Console.WriteLine($"Файл не найден.");
-                    } catch (System.Security.SecurityException e) {
+                    } catch (System.Security.SecurityException) {
                         Console.WriteLine($"Недостаточно прав для доступа к файлу.");
-                    } catch (Exception e) {
+                    } catch (Exception) {
                         Console.WriteLine($"Ошибка доступа к файлу.");
                     }
 
@@ -69,11 +69,11 @@ namespace Task_7._2._1 {
                     try {
                         File.WriteAllText(fileStr.ToString(), text);
                         Console.WriteLine("Текст успешно записан в файл.");
-                    } catch (DirectoryNotFoundException e) {
+                    } catch (DirectoryNotFoundException) {
                         Console.WriteLine($"Папка не найдена.");
-                    } catch (System.Security.SecurityException e) {
+                    } catch (System.Security.SecurityException) {
                         Console.WriteLine($"Недостаточно прав для записи в файл.");
-                    } catch (Exception e) {
+                    } catch (Exception) {
                         Console.WriteLine($"Ошибка записи в файл.");
                     }
 
