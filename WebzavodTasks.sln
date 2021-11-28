@@ -75,7 +75,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Block 2", "Block 2", "{CF2F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Topic 1", "Topic 1", "{239704B3-DDE4-4D6C-BA41-7282B09A20A9}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Task 2 1.1.1", "Block 2\Topic 1\Task 2 1.1.1\Task 2 1.1.1.sqlproj", "{707BA425-8C93-4BA7-968D-EE1683DC205A}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Task 1.1.1", "Block 2\Topic 1\Task 1.1.1\Task 1.1.1.sqlproj", "{707BA425-8C93-4BA7-968D-EE1683DC205A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
