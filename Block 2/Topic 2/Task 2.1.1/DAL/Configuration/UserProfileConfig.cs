@@ -19,7 +19,8 @@ namespace Task_2._1._1.DAL.Configuration {
 
             builder.Property(userProfile => userProfile.Email)
                 .HasColumnName("email")
-                .HasColumnType("varchar(50)");
+                .HasColumnType("varchar(50)")
+                .IsRequired();
 
             builder.Property(userProfile => userProfile.FirstName)
                 .HasColumnName("first_name")
@@ -36,7 +37,7 @@ namespace Task_2._1._1.DAL.Configuration {
             builder
                 .HasOne(userProfile => userProfile.PersonalCard)
                 .WithOne(personalCard => personalCard.UserProfile)
-                .HasForeignKey("UserId");
+                .HasForeignKey<UserProfile>("UserId");
         }
     }
 }

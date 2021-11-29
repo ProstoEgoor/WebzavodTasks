@@ -11,6 +11,8 @@ namespace Task_2._1._1 {
         public ConnectionStringManager(string connectionStringName = "DefaultConnection",
             string environmentVariableName = "CustomersCardsDB_ConnectionString") {
 
+            string path = Directory.GetCurrentDirectory();
+
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")

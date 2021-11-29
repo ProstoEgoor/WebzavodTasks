@@ -13,7 +13,6 @@ namespace Task_2._1._1.DAL.Configuration {
             builder.HasKey("Id");
 
             builder.Property(personalCard => personalCard.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("id")
                 .HasColumnType("bigint");
 

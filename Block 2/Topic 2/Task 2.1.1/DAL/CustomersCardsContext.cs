@@ -5,7 +5,7 @@ using Task_2._1._1.DAL.Model;
 
 namespace Task_2._1._1.DAL {
     class CustomersCardsContext : DbContext {
-        protected CustomersCardsContext() { }
+        public CustomersCardsContext() { }
         public CustomersCardsContext(DbContextOptions options) : base(options) { }
 
         public DbSet<PersonalCard> PersonalCards { get; set; }
