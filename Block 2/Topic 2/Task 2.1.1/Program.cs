@@ -29,8 +29,8 @@ namespace Task_2._1._1 {
                     var description = context
                         .PersonalCards
                         .AsNoTracking()
-                        .Select(personalCard => new { 
-                            personalCard.UserProfile.FirstName, 
+                        .Select(personalCard => new {
+                            personalCard.UserProfile.FirstName,
                             personalCard.UserProfile.LastName,
                             personalCard.Discount
                         }).ToArray();
@@ -56,7 +56,7 @@ namespace Task_2._1._1 {
         }
 
         static void AddMockData() {
-            var personalCards = GetMockPersonalCards(GetMockUserProfiles(), GetMockPurchases());
+            var personalCards = GetMockData();
 
             try {
                 UsingDBContext(context => {
@@ -69,38 +69,12 @@ namespace Task_2._1._1 {
             }
         }
 
-        static PersonalCard[] GetMockPersonalCards(UserProfile[] userProfiles, Purchase[] purchases) {
+        static PersonalCard[] GetMockData() {
             var personalCards = new PersonalCard[3];
+            var userProfiles = new UserProfile[3];
+            var purchases = new Purchase[7];
 
             Random random = new Random();
-
-            var pointers = new int[personalCards.Length + 1];
-            pointers[0] = 0;
-            pointers[^1] = purchases.Length;
-
-            for (int i = 1; i < pointers.Length - 1; i++) {
-                pointers[i] = random.Next(pointers[i-1], purchases.Length);
-            }
-
-            for (int i = 0; i < personalCards.Length; i++) {
-                var personalPurchases = new Purchase[pointers[i + 1] - pointers[i]];
-
-                for (int j = 0; j < personalPurchases.Length; j++) {
-                    personalPurchases[j] = purchases[pointers[i] + j];
-                }
-
-                personalCards[i] = new PersonalCard() { 
-                    Discount = (float)random.Next(0, 11) / 100,
-                    UserProfile = userProfiles[i],
-                    Purchases = personalPurchases
-                };
-            }
-
-            return personalCards;
-        }
-
-        static UserProfile[] GetMockUserProfiles() {
-            var userProfiles = new UserProfile[3];
 
             userProfiles[0] = new UserProfile() {
                 Email = "LilaNWatson@armyspy.com",
@@ -120,21 +94,35 @@ namespace Task_2._1._1 {
                 Email = "Apdris1976@jourrapide.com",
             };
 
-            return userProfiles;
-        }
-
-        static Purchase[] GetMockPurchases() {
-            var purchases = new Purchase[7];
-
-            Random random = new Random();
-
             for (int i = 0; i < purchases.Length; i++) {
                 purchases[i] = new Purchase {
                     PurchaseSum = (ulong)(random.NextDouble() * 10000)
                 };
             }
 
-            return purchases;
+            var pointers = new int[personalCards.Length + 1];
+            pointers[0] = 0;
+            pointers[^1] = purchases.Length;
+
+            for (int i = 1; i < pointers.Length - 1; i++) {
+                pointers[i] = random.Next(pointers[i - 1], purchases.Length);
+            }
+
+            for (int i = 0; i < personalCards.Length; i++) {
+                var personalPurchases = new Purchase[pointers[i + 1] - pointers[i]];
+
+                for (int j = 0; j < personalPurchases.Length; j++) {
+                    personalPurchases[j] = purchases[pointers[i] + j];
+                }
+
+                personalCards[i] = new PersonalCard() {
+                    Discount = (float)random.Next(0, 11) / 100,
+                    UserProfile = userProfiles[i],
+                    Purchases = personalPurchases
+                };
+            }
+
+            return personalCards;
         }
     }
 }
