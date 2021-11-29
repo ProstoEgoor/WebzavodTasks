@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Task_4._1._1 {
     abstract class A {
+
+        public static void Main() { }
+
         public string Prop1 { get; set; } = "aaa";
 
         private int prop2;

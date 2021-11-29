@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Task_5._1._1 {
     class A : ISomeInterface {
+
+        public static void Main() { }
+
         int x;
         public int X { get => x; set => x = value; }
 
