@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Company]
 (
-	[ID_comp] INT NOT NULL PRIMARY KEY,
+	[ID_comp] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 	[name] CHAR(10) NOT NULL
 )

@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Trip]
 (
-	[trip_no] INT NOT NULL PRIMARY KEY,
+	[trip_no] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 	[ID_comp] INT NOT NULL,
 	[plane] CHAR(10) NOT NULL,
 	[town_from] CHAR(25) NOT NULL,
