@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Passenger]
 (
 	[ID_psg] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-	[name] CHAR(20) NOT NULL
+	[name] NCHAR(20) NOT NULL
 )
