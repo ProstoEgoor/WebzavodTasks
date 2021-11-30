@@ -10,8 +10,8 @@ using Task_2._1._1.DAL;
 namespace Task_2._1._1.Migrations
 {
     [DbContext(typeof(CustomersCardsContext))]
-    [Migration("20211129214513_InitialCreat")]
-    partial class InitialCreat
+    [Migration("20211130073031_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,7 +93,8 @@ namespace Task_2._1._1.Migrations
                 {
                     b.HasOne("Task_2._1._1.DAL.Model.PersonalCard", "PersonalCard")
                         .WithMany("Purchases")
-                        .HasForeignKey("CardId");
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("PersonalCard");
                 });

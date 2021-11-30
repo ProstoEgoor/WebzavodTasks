@@ -91,7 +91,8 @@ namespace Task_2._1._1.Migrations
                 {
                     b.HasOne("Task_2._1._1.DAL.Model.PersonalCard", "PersonalCard")
                         .WithMany("Purchases")
-                        .HasForeignKey("CardId");
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("PersonalCard");
                 });

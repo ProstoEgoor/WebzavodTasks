@@ -27,7 +27,8 @@ namespace Task_2._1._1.DAL.Configuration {
             builder
                 .HasOne(purchase => purchase.PersonalCard)
                 .WithMany(personalCard => personalCard.Purchases)
-                .HasForeignKey("CardId");
+                .HasForeignKey("CardId")
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

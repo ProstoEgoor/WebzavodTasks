@@ -37,7 +37,8 @@ namespace Task_2._1._1.DAL.Configuration {
             builder
                 .HasOne(userProfile => userProfile.PersonalCard)
                 .WithOne(personalCard => personalCard.UserProfile)
-                .HasForeignKey<UserProfile>("UserId");
+                .HasForeignKey<UserProfile>("UserId")
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
