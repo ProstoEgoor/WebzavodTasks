@@ -116,7 +116,7 @@ namespace Task_2._1._2 {
             }, connectionString);
         }
 
-        static Trip[] GetTrips(bool deep = false) {
+        static Trip[] GetTrips() {
             return AirlinesContext.UsingDBContext(context => {
                 var trips = context.Trips.FromSqlRaw("SELECT * FROM dbo.Trip").ToArray();
                 return trips;
@@ -159,7 +159,7 @@ namespace Task_2._1._2 {
             }, connectionString);
         }
 
-        static PassInTrip[] GetPassInTrips(bool deep = false) {
+        static PassInTrip[] GetPassInTrips() {
             return AirlinesContext.UsingDBContext(context => {
                 var passInTrips = context.PassInTrips.FromSqlRaw("SELECT * FROM dbo.Pass_in_trip").ToArray();
                 return passInTrips;
