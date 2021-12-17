@@ -11,7 +11,7 @@ namespace Task_1._1._1.Controllers
     [ApiController]
     public class DateTimeController : ControllerBase
     {
-        public DateTime CurrentTime = DateTime.Now;
+        public DateTime CurrentTime { get; } = DateTime.Now;
 
         [HttpGet("/date")]
         public IActionResult GetDate([FromQuery] string format = "dd.MM.yyyy")
