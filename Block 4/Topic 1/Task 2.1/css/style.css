@@ -1,0 +1,527 @@
+/* Colors:
+	container background: #FFFAF2
+	progress bar back: #F5D6AB
+	progress bar front: #C66C49
+	??: #8B4136
+	text color: #333333
+
+	font-family: Segoe MDL2 Assets;
+	font-family: "Libre Franklin", sans-serif;
+
+	*/
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Libre Franklin", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+  color: #333333;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 29px;
+  color: #333333;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 93px 165px 145px;
+}
+
+header.container {
+  background-image: url("../img/bg.png");
+  background-size: cover;
+  color: #fff;
+  position: relative;
+  z-index: 0;
+  padding-bottom: 240px;
+}
+
+header::before {
+  background-color: rgba(198, 108, 73, 0.3);
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.nav-button {
+  display: none;
+}
+
+.logo {
+  margin: 0;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 29px;
+  margin-right: 60px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+  justify-content: space-between;
+}
+
+.menu a {
+  font-size: 18px;
+  line-height: 22px;
+  color: white;
+}
+
+.menu li:nth-child(1) a {
+  font-weight: bold;
+}
+
+.header-text {
+  margin-top: 145px;
+}
+
+.header-text > h2 {
+  font-weight: normal;
+  font-size: 64px;
+  line-height: 78px;
+  color: #fff;
+}
+
+.header-text > p {
+  margin-top: 26px;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.header-text > a {
+  display: block;
+  margin-top: 106px;
+  font-size: 18px;
+  line-height: 22px;
+  text-decoration-line: underline;
+  color: white;
+}
+
+.about {
+  padding-bottom: 115px;
+}
+
+.about-text {
+  margin-top: 76px;
+}
+
+.about-text > p {
+  font-size: 18px;
+  line-height: 30px;
+  text-align: justify;
+  color: #333333;
+  margin-top: 30px;
+}
+
+.skills {
+  background: #fffaf2;
+}
+
+.figure-table {
+  display: flex;
+  margin-top: 86px;
+  justify-content: space-between;
+}
+
+.figure-table img {
+  width: 350px;
+  height: 340px;
+  margin-right: 30px;
+}
+
+.figure-table table {
+  table-layout: fixed;
+  width: 100%;
+  height: fit-content;
+  max-width: 635px;
+  text-align: left;
+}
+
+.skill-col {
+  width: 30%;
+}
+
+.progress-col {
+  width: 70%;
+}
+
+tbody .skill-col,
+tbody .progress-col {
+  vertical-align: bottom;
+}
+
+.figure-table thead th {
+  padding-bottom: 65px;
+}
+
+tbody tr:not(:last-child) .skill-col,
+tbody tr:not(:last-child) .progress-col {
+  padding-bottom: 20px;
+}
+
+.skill-col {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.progress-col {
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.progress-bar-back {
+  width: 100%;
+  height: 24px;
+  background: #f5d6ab;
+}
+
+.progress-bar-front {
+  height: 24px;
+  background: #c66c49;
+}
+
+.figure-table tbody tr:nth-child(1) .progress-bar-front {
+  width: 85%;
+}
+
+.figure-table tbody tr:nth-child(3) .progress-bar-front {
+  width: 78%;
+}
+
+.figure-table tbody tr:nth-child(5) .progress-bar-front {
+  width: 64%;
+}
+
+.portfolio {
+  position: relative;
+}
+
+.portfolio-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.portfolio-text {
+  margin-top: 86px;
+  margin-right: 30px;
+  max-width: 350px;
+}
+
+.portfolio-image {
+  margin-top: 152px;
+  max-width: 635px;
+  display: grid;
+  grid-template-columns: 1.373fr 30px 1fr;
+  grid-template-rows: auto 26px auto 26px auto;
+}
+
+.portfolio-image img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.portfolio-image figure:nth-child(2) {
+  grid-column: 3 / 4;
+  grid-row: 1 / 4;
+}
+.portfolio-image figure:nth-child(3) {
+  grid-column: 1 / 2;
+  grid-row: 3 / 6;
+}
+
+.portfolio-image figure:nth-child(4) {
+  grid-column: 3 / 4;
+  grid-row: 5 / 6;
+}
+
+.portfolio-text h3 {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.portfolio-text p {
+  margin-top: 48px;
+  font-size: 18px;
+  line-height: 30px;
+  text-align: justify;
+}
+
+.button-wrapper {
+  position: absolute;
+}
+
+.arrow {
+  left: 189px;
+  bottom: 145px;
+}
+
+.icon-button {
+  font-family: Segoe MDL2 Assets;
+  font-size: 24px;
+  line-height: 24px;
+  color: #333333;
+}
+
+.arrow .icon-button {
+  margin-right: 14px;
+}
+
+footer {
+  background: #fffaf2;
+  position: relative;
+}
+
+.link-wrapper {
+  margin-top: 51px;
+  display: flex;
+  justify-content: start;
+  column-gap: 300px;
+  row-gap: 50px;
+  flex-wrap: wrap;
+}
+
+.link-wrapper li {
+  margin-bottom: 14px;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.back-to-top {
+  right: 180px;
+  bottom: 70px;
+}
+
+@media (max-width: 1280px) {
+  h2,
+  h3,
+  .header-text {
+    text-align: center;
+  }
+
+  .figure-table,
+  .portfolio-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container {
+    padding: 25px 34px;
+  }
+
+  header.container {
+    padding-top: 36px;
+    padding-bottom: 50px;
+  }
+
+  footer.container {
+    padding-bottom: 50px;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+  .figure-table table,
+  .portfolio-text,
+  .portfolio-image {
+    max-width: unset;
+  }
+
+  .figure-table img {
+    margin-right: 0;
+  }
+
+  .figure-table table {
+    margin-top: 26px;
+  }
+
+  .portfolio-text {
+    margin-top: 26px;
+    margin-right: 0;
+  }
+
+  .portfolio-text > p {
+    margin-top: 26px;
+  }
+
+  .portfolio-image {
+    margin-top: 26px;
+  }
+
+  .back-to-top {
+    right: 34px;
+    bottom: 50px;
+  }
+
+  .figure-table thead th {
+    padding-bottom: 35px;
+  }
+
+  tbody tr:not(:last-child) .skill-col,
+  tbody tr:not(:last-child) .progress-col {
+    padding-bottom: 12px;
+  }
+
+  tbody tr:nth-child(2) .skill-col,
+  tbody tr:nth-child(2) .progress-col,
+  tbody tr:nth-child(4) .skill-col,
+  tbody tr:nth-child(4) .progress-col {
+    padding-bottom: 22px;
+  }
+
+  .link-wrapper {
+    margin-top: 25px;
+    column-gap: 210px;
+    row-gap: 30px;
+  }
+}
+
+@media (max-width: 834px) {
+  header.container {
+    background-image: url("../img/bg\ phone.png");
+  }
+
+  h2 {
+    font-weight: 600;
+  }
+
+  nav {
+    justify-content: center;
+  }
+
+  .nav-button {
+    display: block;
+    left: 34px;
+    top: 39px;
+  }
+
+  .nav-button button {
+    color: white;
+  }
+
+  .logo {
+    margin-right: 0;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .header-text {
+    margin-top: 50px;
+  }
+
+  .header-text > h2 {
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .header-text > p {
+    font-size: 13px;
+    line-height: 16px;
+    margin-top: 13px;
+  }
+
+  .header-text > a {
+    font-size: 13px;
+    line-height: 16px;
+    margin-top: 41px;
+  }
+
+  .about-text {
+    margin-top: 19px;
+  }
+
+  .about-text > p {
+    font-size: 12px;
+    line-height: 15px;
+    margin-top: 15px;
+  }
+
+  .figure-table {
+    margin-top: 25px;
+  }
+
+  .figure-table img {
+    width: 224px;
+    height: 218px;
+  }
+
+  .skill-col,
+  .progress-col {
+    font-size: 12px;
+  }
+
+  .portfolio h3 {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .portfolio-text {
+    margin-top: 19px;
+  }
+
+  .portfolio-text > p {
+    margin-top: 15px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .portfolio-image {
+    margin-top: 15px;
+  }
+
+  .portfolio-image {
+    grid-template-columns: 1.373fr 14.5px 1fr;
+    grid-template-rows: auto 12.6px auto 12.6px auto;
+  }
+
+  .link-wrapper {
+    column-gap: 100px;
+  }
+
+  .link-wrapper li {
+    margin-bottom: 19px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .back-to-top {
+    right: 32px;
+    bottom: 58px;
+  }
+}
