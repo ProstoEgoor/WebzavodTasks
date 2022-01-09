@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="37"
+   height="37"
+   viewBox="0 0 37 37"
+   fill="none"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="VK Icon.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs10">
+    <inkscape:path-effect
+       effect="powerclip"
+       id="path-effect1299"
+       is_visible="true"
+       lpeversion="1"
+       inverse="true"
+       flatten="false"
+       hide_clip="false"
+       message="Use fill-rule evenodd on &lt;b&gt;fill and stroke&lt;/b&gt; dialog if no flatten result after convert clip to paths." />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1295">
+      <path
+         d="M 31.3847,13.085 C 31.5701,12.46 31.3847,12 30.4925,12 H 27.5402 C 26.7884,12 26.4425,12.395 26.2571,12.835 26.2571,12.835 24.7534,16.49 22.6282,18.86 21.9415,19.545 21.6257,19.765 21.2498,19.765 21.0644,19.765 20.7787,19.545 20.7787,18.92 V 13.085 C 20.7787,12.335 20.5681,12 19.9466,12 H 15.3053 C 14.8341,12 14.5534,12.35 14.5534,12.675 14.5534,13.385 15.616,13.55 15.7263,15.55 V 19.89 C 15.7263,20.84 15.5559,21.015 15.1799,21.015 14.1775,21.015 11.7415,17.345 10.298,13.145 10.0073,12.33 9.72157,12 8.96472,12 H 6.01248 C 5.17042,12 5,12.395 5,12.835 5,13.615 6.00246,17.49 9.66643,22.61 12.1074,26.105 15.5458,28 18.6735,28 20.5531,28 20.7837,27.58 20.7837,26.855 20.7837,23.515 20.6133,23.2 21.5556,23.2 21.9916,23.2 22.7435,23.42 24.4978,25.105 26.5027,27.105 26.8335,28 27.9563,28 H 30.9085 C 31.7506,28 32.1766,27.58 31.931,26.75 31.3696,25.005 27.5753,21.415 27.4049,21.175 26.9688,20.615 27.0941,20.365 27.4049,19.865 27.4099,19.86 31.0137,14.8 31.3847,13.085 Z"
+         fill="#293A43"
+         id="path1297"
+         style="display:none;fill:#293a43;fill-opacity:1" />
+      <path
+         id="lpe_path-effect1299"
+         style="fill:#293a43;fill-opacity:1"
+         class="powerclip"
+         d="M -5,-5 H 42 V 41 H -5 Z M 31.3847,13.085 C 31.5701,12.46 31.3847,12 30.4925,12 H 27.5402 C 26.7884,12 26.4425,12.395 26.2571,12.835 26.2571,12.835 24.7534,16.49 22.6282,18.86 21.9415,19.545 21.6257,19.765 21.2498,19.765 21.0644,19.765 20.7787,19.545 20.7787,18.92 V 13.085 C 20.7787,12.335 20.5681,12 19.9466,12 H 15.3053 C 14.8341,12 14.5534,12.35 14.5534,12.675 14.5534,13.385 15.616,13.55 15.7263,15.55 V 19.89 C 15.7263,20.84 15.5559,21.015 15.1799,21.015 14.1775,21.015 11.7415,17.345 10.298,13.145 10.0073,12.33 9.72157,12 8.96472,12 H 6.01248 C 5.17042,12 5,12.395 5,12.835 5,13.615 6.00246,17.49 9.66643,22.61 12.1074,26.105 15.5458,28 18.6735,28 20.5531,28 20.7837,27.58 20.7837,26.855 20.7837,23.515 20.6133,23.2 21.5556,23.2 21.9916,23.2 22.7435,23.42 24.4978,25.105 26.5027,27.105 26.8335,28 27.9563,28 H 30.9085 C 31.7506,28 32.1766,27.58 31.931,26.75 31.3696,25.005 27.5753,21.415 27.4049,21.175 26.9688,20.615 27.0941,20.365 27.4049,19.865 27.4099,19.86 31.0137,14.8 31.3847,13.085 Z" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="16.538442"
+     inkscape:cx="19.379093"
+     inkscape:cy="18.713976"
+     inkscape:window-width="2560"
+     inkscape:window-height="1027"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <path
+     width="37"
+     height="36"
+     rx="2"
+     fill="#c4c4c4"
+     id="rect2"
+     clip-path="url(#clipPath1295)"
+     inkscape:path-effect="#path-effect1299"
+     d="M 2,0 H 35 C 36.108,0 37,0.892 37,2 V 34 C 37,35.108 36.108,36 35,36 H 2 C 0.892,36 0,35.108 0,34 V 2 C 0,0.892 0.892,0 2,0 Z"
+     sodipodi:type="rect"
+     x="0"
+     y="0"
+     transform="scale(1,1.0277778)" />
+</svg>
