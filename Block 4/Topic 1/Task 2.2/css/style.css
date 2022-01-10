@@ -517,7 +517,7 @@ h2 {
   margin-top: 32px;
 }
 
-.price-plan_details__item {
+.price-plan__detail-item {
   font-weight: 500;
   font-size: 18px;
   line-height: 27px;
@@ -901,7 +901,7 @@ h2 {
     line-height: 50px;
   }
 
-  .price-plan_details__item {
+  .price-plan__detail-item {
     font-style: 16px;
   }
 
