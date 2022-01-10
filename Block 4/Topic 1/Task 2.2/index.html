@@ -14,6 +14,8 @@
 	<link rel="stylesheet" href="css/reset.css" />
 	<link rel="stylesheet" href="css/normalize.css" />
 	<link rel="stylesheet" href="css/style.css" />
+
+	<script src="js/carousel.js"></script>
 </head>
 
 <body>
@@ -55,7 +57,9 @@
 		</section>
 		<section class="promo">
 			<h2 class="promo__header">Сложно сказать, почему прототип - не панацея</h2>
-			<img class="promo__side-image" src="img/Common/Side Image.png" alt="Side Image">
+			<div class="promo__side-image-container">
+				<img class="promo__side-image" src="img/Common/Side Image.png" alt="Side Image">
+			</div>
 			<div class="promo__text-container">
 				<p class="promo__text">В рамках спецификации современных стандартов, сделанные на базе интернет-аналитики выводы
 					преданы социально-демократической анафеме. Господа, дальнейшее развитие различных форм деятельности позволяет
@@ -125,7 +129,7 @@
 			<ul class="pricing__planes-container">
 				<li class="price-plane">
 					<h3 class="price-plan__title">Free</h3>
-					<p class="price-plan__price">0 руб./мес.</p>
+					<p class="price-plan__price"><span class="span--price">0</span> руб./мес.</p>
 					<ul class="price-plan__details">
 						<li class="price-plan_details__item">2 Gb в хранилище</li>
 						<li class="price-plan_details__item">1 пользователь</li>
@@ -136,7 +140,7 @@
 				</li>
 				<li class="price-plane">
 					<h3 class="price-plan__title">Basic</h3>
-					<p class="price-plan__price">100 руб./мес.</p>
+					<p class="price-plan__price"><span class="span--price">100</span> руб./мес.</p>
 					<ul class="price-plan__details">
 						<li class="price-plan_details__item">10 Gb в хранилище</li>
 						<li class="price-plan_details__item">3 пользователя</li>
@@ -147,7 +151,7 @@
 				</li>
 				<li class="price-plane">
 					<h3 class="price-plan__title">Pro</h3>
-					<p class="price-plan__price">500 руб./мес.</p>
+					<p class="price-plan__price"><span class="span--price">500</span> руб./мес.</p>
 					<ul class="price-plan__details">
 						<li class="price-plan_details__item">50 Gb в хранилище</li>
 						<li class="price-plan_details__item">Неограниченное число пользователей</li>
@@ -167,8 +171,6 @@
 			<li class="social-icon"><a href="#"><img src="icon/Facebook Icon.svg" alt=""></a></li>
 		</ul>
 	</footer>
-
-	<script src="js/carousel.js"></script>
 </body>
 
 </html>
