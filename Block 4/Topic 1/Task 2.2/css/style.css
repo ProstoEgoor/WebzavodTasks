@@ -342,6 +342,7 @@ h2 {
   height: 100%;
   position: relative;
   overflow: hidden;
+  /* transition: scroll 250ms ease-in; */
 }
 
 .carousel__track {

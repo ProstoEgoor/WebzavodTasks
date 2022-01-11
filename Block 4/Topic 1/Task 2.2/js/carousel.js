@@ -59,7 +59,9 @@ window.addEventListener('load', e => {
 
 const moveToSlide = (track, currentSlide, targetSlide) => {
 	const amountToMove = targetSlide.getBoundingClientRect().x - track.getBoundingClientRect().x;
-	track.parentNode.scrollLeft = amountToMove;
+	// track.parentNode.scrollLeft = amountToMove;
+	// console.log("translateX(-" + amountToMove + "px)");
+	track.style.transform = "translateX(-" + amountToMove + "px)";
 	if (currentSlide !== targetSlide) {
 		currentSlide.classList.remove('selected');
 		targetSlide.classList.add('selected');
