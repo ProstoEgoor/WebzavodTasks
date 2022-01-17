@@ -108,22 +108,22 @@ async function loadData() {
 
 	let newData = mockData;
 
-	await fetch('https://commodities-api.com/api/timeseries?' + queryParams.toString())
-		.then(response => response.json())
-		.then(result => {
-			if (result.data.error) {
-				throw new Error(JSON.stringify(result.data.error));
-			}
+	try {
+		const response = await fetch('https://commodities-api.com/api/timeseries?' + queryParams.toString());
+		if (!response.ok) {
+			throw Error(response.statusText);
+		}
+		const result = await response.json();
+		if (result.data.error) {
+			throw Error(JSON.stringify(result.data.error));
+		}
 
-			newData = result.data;
-		})
-		.catch(err => {
-			console.log('Не получилось загрузить данные. Используются mock данные.');
-			console.log(err.message);
-		});
+		newData = result.data;
+	} catch (err) {
+		console.log('Не получилось загрузить данные. Используются mock данные.', err.message);
+	}
 
-	console.log('Загруженные данные:');
-	console.log(newData);
+	console.log('Загруженные данные:', newData);
 	return newData;
 }
 
