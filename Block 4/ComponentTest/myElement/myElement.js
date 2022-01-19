@@ -5,8 +5,8 @@ async function getClass(path) {
 		path += '/';
 	}
 
-	var root = document.createElement('div');
-	root.innerHTML = await (await fetch(path + '/myElement.html')).text();
+	let root = document.createElement('div');
+	root.innerHTML = await (await fetch(path + 'myElement.html')).text();
 
 	let template = root.querySelector('template');
 	let cssLinks = root.querySelectorAll('link[rel="stylesheet"]');
